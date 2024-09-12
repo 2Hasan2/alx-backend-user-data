@@ -8,6 +8,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from typing import Optional
 from user import Base, User
 
+
 class DB:
     """DB class"""
 
@@ -27,7 +28,7 @@ class DB:
         return self.__session
 
     def add_user(self, email: str, hashed_password: str) -> User:
-        """ Adds user to database
+        """Adds user to database
         Return: User Object
         """
         user = User(email=email, hashed_password=hashed_password)
@@ -36,11 +37,8 @@ class DB:
 
         return user
 
-    
-    
     def find_user_by(self, **kwargs) -> Optional[User]:
-        """ Returns the first row that matches all filter criteria
-        """
+        """Returns the first row that matches all filter criteria"""
         try:
             return self._session.query(User).filter_by(**kwargs).one()
         except NoResultFound:
