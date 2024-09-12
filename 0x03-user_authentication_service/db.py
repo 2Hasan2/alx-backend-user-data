@@ -27,7 +27,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> User:
+    async def add_user(self, email: str, hashed_password: str) -> User:
         """Adds user to database
         Return: User Object
         """
@@ -37,7 +37,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs) -> Optional[User]:
+    async def find_user_by(self, **kwargs) -> Optional[User]:
         """Returns the first row that matches all filter criteria"""
         try:
             return self._session.query(User).filter_by(**kwargs).one()
