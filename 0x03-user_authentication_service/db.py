@@ -8,7 +8,6 @@ from sqlalchemy.orm.exc import NoResultFound
 from typing import Optional
 from user import Base, User
 
-
 class DB:
     """DB class"""
 
@@ -20,15 +19,15 @@ class DB:
         self.__session = None
 
     @property
-    def _session(self) -> Session:
+    def _session(self):
         """Memoized session object"""
         if self.__session is None:
             DBSession = sessionmaker(bind=self._engine)
             self.__session = DBSession()
         return self.__session
 
-    async def add_user(self, email: str, hashed_password: str) -> User:
-        """Adds user to database
+    def add_user(self, email: str, hashed_password: str) -> User:
+        """ Adds user to database
         Return: User Object
         """
         user = User(email=email, hashed_password=hashed_password)
@@ -37,8 +36,11 @@ class DB:
 
         return user
 
-    async def find_user_by(self, **kwargs) -> Optional[User]:
-        """Returns the first row that matches all filter criteria"""
+    
+    
+    def find_user_by(self, **kwargs) -> Optional[User]:
+        """ Returns the first row that matches all filter criteria
+        """
         try:
             return self._session.query(User).filter_by(**kwargs).one()
         except NoResultFound:
